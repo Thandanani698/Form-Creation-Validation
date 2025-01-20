@@ -1,25 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration Form</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    /* Simple styling for the form and feedback */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .form-container {
+      width: 300px;
+      margin: 0 auto;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #form-feedback {
+      margin-top: 10px;
+      padding: 10px;
+      display: none;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
+
+  <div class="form-container">
+    <h2>Registration Form</h2>
     <form id="registration-form">
-        <label for="username">Username:</label>
-        <input type="text" id="username" required>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" required>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" required>
-
-        <button type="submit">Register</button>
-        <div id="form-feedback"></div>
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+      
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+      
+      <button type="submit">Register</button>
     </form>
-    <script src="script.js"></script>
+
+    <!-- Feedback div for validation messages -->
+    <div id="form-feedback"></div>
+  </div>
+
+  <script>
+    // Wait until the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Select form and feedback division
+      const form = document.getElementById('registration-form');
+      const feedbackDiv = document.getElementById('form-feedback');
+
+      // Add event listener to the form for the 'submit' event
+      form.addEventListener('submit', function(event) {
+        // Prevent the form from submitting to the server
+        event.preventDefault();
+
+        // Retrieve user inputs and trim any leading/trailing whitespace
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        // Initialize validation variables
+        let isValid = true;
+        const messages = [];
+
+        // Username validation (at least 3 characters)
+        if (username.length < 3) {
+          isValid = false;
+          messages.push('Username must be at least 3 characters long.');
+        }
+
+        // Email validation (must include '@' and '.')
+        if (!email.includes('@') || !email.includes('.')) {
+          isValid = false;
+          messages.push('Please enter a valid email address.');
+        }
+
+        // Password validation (at least 8 characters)
+        if (password.length < 8) {
+          isValid = false;
+          messages.push('Password must be at least 8 characters long.');
+        }
+
+        // Display feedback
+        feedbackDiv.style.display = "block"; // Make feedbackDiv visible
+        if (isValid) {
+          feedbackDiv.textContent = "Registration successful!";
+          feedbackDiv.style.color = "#28a745"; // Success message color
+        } else {
+          feedbackDiv.innerHTML = messages.join('<br>'); // Join messages with line breaks
+          feedbackDiv.style.color = "#dc3545"; // Error message color
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
