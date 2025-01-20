@@ -29,7 +29,7 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: calc(100% - 22px); /* Adjust width to account for padding and border */
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    box-sizing: border-box;
 }
 
 button {
